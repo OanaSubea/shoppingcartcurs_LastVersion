@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ {% with totail_items=cart|length %}
+    {% if cart|length > 0 %}
+        My Shopping Order:
+        <a href="{% url "cart:cart_detail" %}" style="color: #ffffff">
+            {{ totail_items }} item {{ totail_items|pluralize }}, Kshs. {{ cart.get_total_price }}
+        </a>
+        {% else %}
+        Your cart is empty.
+    {% endif %}
+{% endwith %}
+<br />
+{% for item in cart %}
+    {% with product=item.product  %}
+        {{ product.name }}
+        <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ item.update_quantity_form.quantity }}
+                                    {{ item.update_quantity_form.update }}
+                                    <input type="submit" value="Update">
+                                </form>
+        <a href="{% url "cart:cart_remove" product.id %}">Remove</a>
+ {{ item.price }}
+ {{ item.total_price }}
+ </br>
+    {% endwith %}
+ {% endfor %}
+Pretul total este: {{ cart.get_total_price }}
+</body>
+
+</html>

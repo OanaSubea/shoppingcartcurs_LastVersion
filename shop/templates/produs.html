@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Produs name: {{produs.name}} <br />
+Produs descriere: {{produs.description}} <br />
+Pret: {{produs.price}} $ <br />
+<form action="{% url "cart:cart_add" produs.id %}" method="post">
+    {% csrf_token %}
+    {{ cart_product_form }}
+    <input type="submit" value="add to cart" class="btn btn-primary">
+</form>
+
+</body>
+</html>
